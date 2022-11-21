@@ -10,10 +10,12 @@ public class GunController : MonoBehaviour
     public float angle;
     [SerializeField] float atkSpeed = 2;
     [SerializeField] float fireCd = 0;
+    AudioSource fire;
     // Start is called before the first frame update
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        fire = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -52,6 +54,7 @@ public class GunController : MonoBehaviour
             b.transform.rotation = Quaternion.Euler(0,0,angle);
             b.SetActive(true);
             fireCd = atkSpeed;
+            fire.Play();
         }
     }
 }

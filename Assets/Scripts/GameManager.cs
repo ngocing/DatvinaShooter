@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _Instant;
 
     public static GameManager Instant => _Instant;
-    [SerializeField] GameObject _enemyPrefab;
     Vector2 border;
     float timeCd;
+    [SerializeField] public GameObject pauseMenu;
+    public GameObject jsMovement;
+
     private void Awake() {
         _Instant = this;
     }
@@ -23,10 +26,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(timeCd <= 0){
-            // spawnEnemy();
-            timeCd = Random.Range(2,3f);
-        }
+        // if(timeCd <= 0){
+        //     spawnEnemy();
+        //     timeCd = Random.Range(2,3f);
+        // }
     }
 
     // void spawnEnemy(){
@@ -53,5 +56,24 @@ public class GameManager : MonoBehaviour
             enemy.transform.position = pos;
             enemy.SetActive(true);
         }
+    }
+    public void PauseGame(){
+        Time.timeScale = 0;
+        pauseMenu.SetActive(true);
+        jsMovement.SetActive(false);
+    }
+    public void RemuseGame(){
+        Time.timeScale = 1;
+        jsMovement.SetActive(true);
+        pauseMenu.SetActive(false);
+    }
+    public void BackMenu(){
+        SceneManager.LoadScene("Home");
+    }
+    public void Quit(){
+        Application.Quit();
+    }
+    public void StartGame(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
